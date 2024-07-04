@@ -1,4 +1,7 @@
 ---
+import { ViewTransitions } from 'astro:transitions'
+import { Video } from '../components/Video.tsx';
+
 interface Props {
 	title: string;
 }
@@ -15,9 +18,12 @@ const { title } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+    <ViewTransitions />
 	</head>
 	<body>
 		<slot />
+    <br/>
+    <Video client:load transition:persist />
 	</body>
 </html>
 <style is:global>
@@ -34,7 +40,7 @@ const { title } = Astro.props;
 	}
 	html {
 		font-family: system-ui, sans-serif;
-		background: #13151a;
+		background: white;
 		background-size: 224px;
 	}
 	code {

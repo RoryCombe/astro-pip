@@ -1,0 +1,77 @@
+
+<div class="demo">
+  <video src="https://res.cloudinary.com/atapas/video/upload/v1620052733/demos/earth_rotating_g1xv0f.mp4" id="video" muted autoplay loop></video>
+  <button id="actionBtnId" class="action" onclick="toggle()">Enter Picture-in-Picture mode</button>
+</div>
+
+<script is:inline>
+  console.log('Rendering layout')
+  // @ts-nocheck
+  const actionBtnId = document.getElementById('actionBtnId');
+
+  if (document.pictureInPictureEnabled) {
+      actionBtnId.disabled = false;
+  } else{
+      actionBtnId.disabled = true;
+  }
+
+  function toggle() {
+    if (document.pictureInPictureElement) {
+        document.exitPictureInPicture();
+    } else if (document.pictureInPictureEnabled) {
+        video.requestPictureInPicture();
+    }
+  }
+
+  video.addEventListener('enterpictureinpicture', () => {
+    actionBtnId.textContent = 'Exit Picture-in-Picture mode';
+    actionBtnId.classList.add("redBtn");
+  });
+
+  video.addEventListener('leavepictureinpicture', () => {
+    actionBtnId.textContent = 'Enter Picture-in-Picture mode';
+    actionBtnId.classList.remove("redBtn");
+  });
+</script>
+
+<style>
+  video{
+    border-radius: 4px;
+    margin: 0 0 3px 0;
+  }
+
+  .demo {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+  }
+
+  .action{
+    display: block;
+    background-color: #0098ff;
+    color: #FFF;
+    padding: 8px;
+    border: 1px solid #0098ff;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .action:disabled{
+    background-color: #ebebeb;
+    color: #FFFFFF;
+    cursor: none;
+    border: 1px solid #ebebeb;
+  }
+
+  .redBtn {
+    background-color: red;
+    color: white;
+  }
+
+  :picture-in-picture {
+    box-shadow: 0 0 0 5px #0081ff;
+    background-color: #565652;
+  }
+</style>
